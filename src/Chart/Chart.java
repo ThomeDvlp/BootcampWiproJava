@@ -52,10 +52,10 @@ public class Chart {
 			}
 			
 			quantity = inputValidator(
-					"\nQTN PROD\nDigite a quantity que deseja colocar no carrinho: ", 
+					"\nQTN PROD\nDigite a quantidade que deseja colocar no carrinho: ", 
 					"\nERROR - Valor Invalido\nInforme um valor numerico entre 1 a 10", "[0-9]*");
             if (inventory[code] == 0 || quantity > inventory[code]) {
-                System.out.println("A quantity informada é maior do que o numero disponivel em inventory");
+                System.out.println("A quantidade informada é maior do que o numero disponivel em estoque");
                 continue;
             } else {
                 productQuantity.add(quantity);
@@ -140,7 +140,7 @@ public class Chart {
 	                "--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---%n" +
 	                "Nome Prod. \tQtde. no Carrinho \tPreço Unit. \tPreço Total%n");
 	        for (int i = 0; i < carrinhoCodigoProduto.size(); i++) {
-	            System.out.printf("%s\t\t\t%s\t\t\t\t RS %5.2f\t\t R$ %5.2f%n",
+	            System.out.printf("%s\t\t\t%s\t\tRS %5.2f\tR$ %5.2f%n",
 	                    produtos[carrinhoCodigoProduto.get(i)],
 	                    carrinhoQuantidade.get(i),
 	                    precos[carrinhoCodigoProduto.get(i)],
@@ -155,25 +155,25 @@ public class Chart {
 	                "[1] - Escolher forma de pagamento. %n" +
 	                "[2] - Cancelar compra e esvaziar carrinho. %n" +
 	                "--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---%n");
-	        float desconto = 0.0f;
-	        float valorASerPago = 0.0f;
+	        float discount = 0.0f;
+	        float amount = 0.0f;
 	        boolean checker = false;
 	        do {
 	            Scanner sc = new Scanner(System.in);
 	            String choice = sc.next();
 	            if (choice.matches("[1-2]*")) {
 	                if (choice.matches("1")) {
-	                    int payMethod = formasDePagamento();
+	                    int payMethod = paymentMethods();
 
 	                    if (payMethod == 1) {
-	                        desconto = ((20.0f / 100) * valorTotalDeCompra);
-	                        valorASerPago = valorTotalDeCompra - desconto;
+	                        discount = ((20.0f / 100) * valorTotalDeCompra);
+	                        amount = valorTotalDeCompra - discount;
 	                    } else if (payMethod == 2) {
-	                        desconto = ((10.0f / 100) * valorTotalDeCompra);
-	                        valorASerPago = valorTotalDeCompra - desconto;
+	                        discount = ((10.0f / 100) * valorTotalDeCompra);
+	                        amount = valorTotalDeCompra - discount;
 	                    }else{
-	                        desconto = 0.0f;
-	                        valorASerPago = valorTotalDeCompra;
+	                        discount = 0.0f;
+	                        amount = valorTotalDeCompra;
 	                    }
 	                } else if (choice.matches("2")) {
 	                    carrinhoCodigoProduto.clear();
@@ -189,40 +189,58 @@ public class Chart {
 	                        "--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---%n%n");
 	            }
 
-	            float tributos = 0.09f * valorASerPago;
+	            float taxes = 0.09f * amount;
+	            
+	            System.out.printf("Wipro Store%n" +
+	                    "Rua dos Bóbos, nº0 - Digital MarketPlace LTDA%n" +
+	                    "CNPJ:9874561230-00%n%n%n" +
+	                    "NOTA FISCAL" +
+	                    "%n=======================================================================%n" +
+	                    "PRODUTO\t\tQTND.PRODUTOS\t PREÇO UNIT.\t\t PREÇO TOTAL%n");
+	                for (int i = 0; i < carrinhoCodigoProduto.size(); i++) {
+	                    System.out.printf("%s\t\t%s\t\t%5.2f\t\t\t%5.2f %n",
+	                            produtos[carrinhoCodigoProduto.get(i)],
+	                            carrinhoQuantidade.get(i),
+	                            precos[carrinhoCodigoProduto.get(i)],
+	                            precos[carrinhoCodigoProduto.get(i)] * carrinhoQuantidade.get(i)
+	                    );
+	                }
+	                    System.out.printf("=======================================================================\n\n" +
+	                            "DISCONTO NA COMPRA: R$ %5.2f%n" +
+	                            "VALOR TOTAL A SER PAGO: R$ %5.2f%n" +
+	                            "VALOR TRIBUTÁRIO: R$ %5.2f", discount, amount, taxes);
+	                    System.out.printf("\n=======================================================================\n\n");
+
+	        } while (!checker);
+	        return checker;
 		
 	}
 
+	    public static int paymentMethods() {
+	        int choice;
+	        choice = inputValidator("[1] - À vista em dinheiro/Pix ou cartão MASTERCARD, recebe 20 porcento de desconto\n" +
+	                        "[2] - À vista no cartão de crédito, recebe 10 porcento de desconto\n" +
+	                        "[3] - Em três vezes, preço normal de etiqueta sem juros\n" +
+	                        "Qual seria a forma de pagamento ?",
+	                "--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---",
+	                "[1-3]",
+	                "Opção Invalida\nEscolha entre 1 a 4 uma das opções disponiveis para pagamento\n");
+	        return choice;
+	    }
+	    
+	    public static void presentation(){
+	        System.out.printf("%n%n\t\t\t BOOTCAMP WIPRO by Gama Academy%n");
+	        System.out.println("=======================================================================");
+	        System.out.printf("Desafio de Projeto - Mercado Digital" +
+	                "%n%nGRUPO 06%n" +
+	                "\t\tJeferson Gomes%n" +
+	                "\t\tThiago Gomes%n" +
+	                "\t\tVan-Romel Neto%n" +
+	                "\t\tRenato Marques%n" +
+	                "\t\tRoberto Thomé%n" +
+	                "\t\tEzau Martins%n");
+	        System.out.println("=======================================================================\n\n");
 
-//		System.out.print("Olá! Digite o código do produto desejado: ");
-//		int code = input.nextInt();
-//		System.out.print("Insira a quantity do produto desejado: ");
-//		int quantity = input.nextInt();
-//		if (code > products.length) {
-//			System.out.println("Produto inexistente");
-//		}
-//		if (quantity > inventory[code - 1]) {
-//			System.out.println("quantity indisponível");
-//		}
-//		System.out.println(quantity + " un de " + products[code - 1] + " adicionado com sucesso no carrinho");
-//		System.out.println("Você deseja adicionar mais um produto? (S/N): ");
-//		String response = input.next();
-//
-//		do {
-//			System.out.println("=======================================================");
-//			System.out.print("Olá! Digite o código do produto desejado: ");
-//			int code = input.nextInt();
-//			System.out.print("Insira a quantity do produto desejado: ");
-//			int quantity = input.nextInt();
-//			if (code > products.length) {
-//				System.out.println("Produto inexistente");
-//			}
-//			if (quantity > inventory[code - 1]) {
-//				System.out.println("quantity indisponível");
-//			}
-//			System.out.println(quantity + " un de " + products[code - 1] + " adicionado com sucesso no carrinho");
-//			System.out.println("Você deseja adicionar mais um produto? (S/N): ");
-//			String response = input.next();
-//		} while (response.equalsIgnoreCase("s"));
-	}
+	    }
+	
 }
