@@ -1,5 +1,6 @@
 package POO.EHP;
 
-public interface Peca {
-	public void mover();
+public abstract class Peca {
+	
+	public abstract void mover();
 }

@@ -1,13 +1,13 @@
 package POO.EHP;
 
-public class Peao implements Peca {
+public class Peao extends Peca {
+	
+	public String cor() {
+		return "Azul";
+	}
 
 	@Override
 	public void mover() {
-		System.out.println("Anda para frente");
-		
+		System.out.println("Anda para frente");	
 	}
-	
-
-
 }

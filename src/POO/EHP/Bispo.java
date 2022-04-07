@@ -1,6 +1,6 @@
 package POO.EHP;
 
-public class Bispo implements Peca {
+public class Bispo extends Peca {
 
 	@Override
 	public void mover() {
