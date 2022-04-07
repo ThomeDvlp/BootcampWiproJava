@@ -1,4 +1,4 @@
-package squadMatrix;
+package squadMatrix.school;
 
 public class SchoolProject extends SchoolEvaluation {
 

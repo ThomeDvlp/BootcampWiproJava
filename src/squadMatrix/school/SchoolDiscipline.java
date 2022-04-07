@@ -1,4 +1,4 @@
-package squadMatrix;
+package squadMatrix.school;
 
 public class SchoolDiscipline {
 	public static void main(String[] args) {

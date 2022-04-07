@@ -1,4 +1,4 @@
-package squadMatrix;
+package squadMatrix.television;
 
 public class RemoteControl {
 
