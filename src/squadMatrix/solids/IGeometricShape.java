@@ -6,5 +6,6 @@ public interface IGeometricShape {
 	String numberOfSides();
 
 	double area(double a, double b);
+	
 	double area(double a);
 }
